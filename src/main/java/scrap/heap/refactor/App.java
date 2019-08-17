@@ -1,38 +1,84 @@
 package scrap.heap.refactor;
 
+import scrap.heap.refactor.domain.Balloon;
+import scrap.heap.refactor.domain.Cake;
+import scrap.heap.refactor.domain.Color;
+
 public class App {
+
     public String getGreeting() {
         return "Hello world.";
     }
 
-    public static void main(String[] args) {
+    public Order order() {
 
-         //Place birthday party orders
-         order("red", "mylar", "4", "chocolate", "chocolate", "circle", "large", "brown" );
-         order("blue", "latex", "7", "Vanilla", "chocelate", "square", "med", "brown" );
-         order("yellow", "mylar", "4", "vanilla", "vanilla", "square", "small", "yellow" );
+        Order order = new Order();
+        addBalloons(order);
+        addCakes(order);
 
+        order.execute();
+        return order;
     }
 
-    private static void order(String balloonColor, String material, String number, String flavor, String frostingFlavor, String shape, String size, String cakeColor){
+    private void addBalloons(Order order) {
+        Balloon redBalloon = Balloon.Builder.newInstance()
+                .setColor(Color.RED)
+                .setMaterial(Balloon.Material.MYLAR)
+                .build();
 
-        orderBalloons(balloonColor, material, number);
+        Order.LineItem lineItem = new Order.LineItem(redBalloon, 4);
+        order.addLineItem(lineItem);
 
-        orderCake(frostingFlavor, flavor, shape, size, cakeColor);
+        Balloon blueBaloon = Balloon.Builder.newInstance()
+                .setColor(Color.BLUE)
+                .setMaterial(Balloon.Material.LATEX)
+                .build();
+
+        lineItem = new Order.LineItem(blueBaloon, 7);
+        order.addLineItem(lineItem);
+
+        Balloon yellowBallon = Balloon.Builder.newInstance()
+                .setColor(Color.YELLOW)
+                .setMaterial(Balloon.Material.MYLAR)
+                .build();
+
+        lineItem = new Order.LineItem(yellowBallon, 4);
+        order.addLineItem(lineItem);
     }
 
-    private static void orderBalloons(String balloonColor, String material, String number){
+    private void addCakes(Order order) {
+        Cake largeCake = Cake.Builder.newInstance()
+                .setFlavor(Cake.Flavor.CHOCOLATE)
+                .setFrostingFlavor(Cake.Flavor.CHOCOLATE)
+                .setShape(Cake.Shape.CIRCLE)
+                .setSize(Cake.Size.LARGE)
+                .setColor(Color.BROWN)
+                .build();
 
-        //for the purposes of this exercise, pretend this method works and adds balloons to the order
-        System.out.println("Balloons ordered; " + balloonColor + ", " + material  + ", " + number);
+        Order.LineItem lineItem = new Order.LineItem(largeCake, 1);
+        order.addLineItem(lineItem);
 
+
+        Cake mediumCake = Cake.Builder.newInstance()
+                .setFlavor(Cake.Flavor.VANILLA)
+                .setFrostingFlavor(Cake.Flavor.CHOCOLATE)
+                .setShape(Cake.Shape.SQUARE)
+                .setSize(Cake.Size.MED)
+                .setColor(Color.BROWN)
+                .build();
+
+        lineItem = new Order.LineItem(mediumCake, 1);
+        order.addLineItem(lineItem);
+
+        Cake smallCake = Cake.Builder.newInstance()
+                .setFlavor(Cake.Flavor.VANILLA)
+                .setFrostingFlavor(Cake.Flavor.VANILLA)
+                .setShape(Cake.Shape.SQUARE)
+                .setSize(Cake.Size.SMALL)
+                .setColor(Color.YELLOW)
+                .build();
+
+        lineItem = new Order.LineItem(smallCake, 1);
+        order.addLineItem(lineItem);
     }
-
-    private static void orderCake(String flavor, String frostingFlavor, String shape, String size, String cakeColor){
-
-        //for the purposes of this exercise, pretend that this method adds a cake to the order
-        System.out.println("cake ordered; " + flavor + ", " + frostingFlavor  + ", " + shape + ", " + size + ", " + cakeColor);
-
-    }
-
 }

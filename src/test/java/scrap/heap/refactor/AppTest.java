@@ -3,12 +3,65 @@
  */
 package scrap.heap.refactor;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import scrap.heap.refactor.domain.Balloon;
+import scrap.heap.refactor.domain.Cake;
+import scrap.heap.refactor.domain.Color;
+
+import static org.testng.Assert.*;
 
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
+    @Test
+    public void testAppHasAGreeting() {
         App classUnderTest = new App();
         assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+    }
+
+    @Test
+    public void testOrder() {
+        App classUnderTest = new App();
+        Order order = classUnderTest.order();
+        assertNotNull(classUnderTest.order(), "Non null order expected");
+        assertNotNull(order.getLineItems(), "Non null line item expected");
+        assertEquals( order.getLineItems().size(), 6,  "Wrong number of line items: " + order.getLineItems().size());
+
+        assertTrue(order.getLineItems().get(0).getOrderable() instanceof Balloon, "Balloon expected!");
+        assertEquals(((Balloon) order.getLineItems().get(0).getOrderable()).getColor(), Color.RED, "Red Balloon expected!");
+        assertEquals(((Balloon) order.getLineItems().get(0).getOrderable()).getMaterial(), Balloon.Material.MYLAR, "Mylar Balloon expected!");
+        assertEquals(order.getLineItems().get(0).getNumber(),4, "4 Balloons expected!");
+
+        assertTrue(order.getLineItems().get(1).getOrderable() instanceof Balloon, "Balloon expected!");
+        assertEquals(((Balloon) order.getLineItems().get(1).getOrderable()).getColor(), Color.BLUE, "Blue Balloon expected!");
+        assertEquals(((Balloon) order.getLineItems().get(1).getOrderable()).getMaterial(), Balloon.Material.LATEX, "Latex Balloon expected!");
+        assertEquals(order.getLineItems().get(1).getNumber(),7, "7 Balloons expected!");
+
+        assertTrue(order.getLineItems().get(2).getOrderable() instanceof Balloon, "Balloon expected!");
+        assertEquals(((Balloon) order.getLineItems().get(2).getOrderable()).getColor(), Color.YELLOW, "Yellow Balloon expected!");
+        assertEquals(((Balloon) order.getLineItems().get(2).getOrderable()).getMaterial(), Balloon.Material.MYLAR, "Mylar Balloon expected!");
+        assertEquals(order.getLineItems().get(2).getNumber(),4, "4 Balloons expected!");
+
+        assertTrue(order.getLineItems().get(3).getOrderable() instanceof Cake, "Cake expected");
+        assertEquals(((Cake) order.getLineItems().get(3).getOrderable()).getColor(), Color.BROWN, "Brown Cake expected!");
+        assertEquals(((Cake) order.getLineItems().get(3).getOrderable()).getFlavor(), Cake.Flavor.CHOCOLATE, "Chocolate flavored Cake expected!");
+        assertEquals(((Cake) order.getLineItems().get(3).getOrderable()).getFrostingFlavor(), Cake.Flavor.CHOCOLATE, "Chocolate flavored frosting expected!");
+        assertEquals(((Cake) order.getLineItems().get(3).getOrderable()).getShape(), Cake.Shape.CIRCLE, "Circle shaped Cake expected!");
+        assertEquals(((Cake) order.getLineItems().get(3).getOrderable()).getSize(), Cake.Size.LARGE, "Large Cake expected!");
+        assertEquals(order.getLineItems().get(3).getNumber(), 1, "1 Cake expected!");
+
+        assertTrue(order.getLineItems().get(4).getOrderable() instanceof Cake, "Cake expected");
+        assertEquals(((Cake) order.getLineItems().get(4).getOrderable()).getColor(), Color.BROWN, "Brown Cake expected!");
+        assertEquals(((Cake) order.getLineItems().get(4).getOrderable()).getFlavor(), Cake.Flavor.VANILLA, "Vanilla flavored Cake expected!");
+        assertEquals(((Cake) order.getLineItems().get(4).getOrderable()).getFrostingFlavor(), Cake.Flavor.CHOCOLATE, "Chocolate flavored frosting expected!");
+        assertEquals(((Cake) order.getLineItems().get(4).getOrderable()).getShape(), Cake.Shape.SQUARE, "Square shaped Cake expected!");
+        assertEquals(((Cake) order.getLineItems().get(4).getOrderable()).getSize(), Cake.Size.MED, "Medium Cake expected!");
+        assertEquals(order.getLineItems().get(4).getNumber(), 1, "1 Cake expected!");
+
+        assertTrue( order.getLineItems().get(5).getOrderable() instanceof Cake, "Cake expected");
+        assertEquals(((Cake) order.getLineItems().get(5).getOrderable()).getColor(), Color.YELLOW, "Yellow Cake expected!");
+        assertEquals(((Cake) order.getLineItems().get(5).getOrderable()).getFlavor(), Cake.Flavor.VANILLA, "Vanilla flavored Cake expected!");
+        assertEquals(((Cake) order.getLineItems().get(5).getOrderable()).getFrostingFlavor(), Cake.Flavor.VANILLA, "Vanilla flavored frosting expected!");
+        assertEquals(((Cake) order.getLineItems().get(5).getOrderable()).getShape(), Cake.Shape.SQUARE, "Square shaped Cake expected!");
+        assertEquals(((Cake) order.getLineItems().get(5).getOrderable()).getSize(), Cake.Size.SMALL, "Small Cake expected!");
+        assertEquals(order.getLineItems().get(5).getNumber(), 1, "1 Cake expected!");
     }
 }
